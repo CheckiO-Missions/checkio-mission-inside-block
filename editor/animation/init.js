@@ -77,37 +77,115 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210'],
             }
             //Dont change the code before it
 
-            //Your code here about test explanation animation
-            //$content.find(".explanation").html("Something text for example");
-            //
-            //
-            //
-            //
-            //
+            var canvas = new TargetHitCanvas($content.find(".explanation")[0]);
+            canvas.createCanvas(checkioInput[0], checkioInput[1]);
+            canvas.animateCanvas(checkioInput[0]);
 
 
             this_e.setAnimationHeight($content.height() + 60);
 
         });
 
-       
+        function TargetHitCanvas(dom)  {
+            var format = Raphael.format;
 
-        var colorOrange4 = "#F0801A";
-        var colorOrange3 = "#FA8F00";
-        var colorOrange2 = "#FAA600";
-        var colorOrange1 = "#FABA00";
+            var colorOrange4 = "#F0801A";
+            var colorOrange3 = "#FA8F00";
+            var colorOrange2 = "#FAA600";
+            var colorOrange1 = "#FABA00";
 
-        var colorBlue4 = "#294270";
-        var colorBlue3 = "#006CA9";
-        var colorBlue2 = "#65A1CF";
-        var colorBlue1 = "#8FC7ED";
+            var colorBlue4 = "#294270";
+            var colorBlue3 = "#006CA9";
+            var colorBlue2 = "#65A1CF";
+            var colorBlue1 = "#8FC7ED";
 
-        var colorGrey4 = "#737370";
-        var colorGrey3 = "#9D9E9E";
-        var colorGrey2 = "#C5C6C6";
-        var colorGrey1 = "#EBEDED";
+            var colorGrey4 = "#737370";
+            var colorGrey3 = "#9D9E9E";
+            var colorGrey2 = "#C5C6C6";
+            var colorGrey1 = "#EBEDED";
 
-        var colorWhite = "#FFFFFF";
+            var colorWhite = "#FFFFFF";
+
+            var cell = 20;
+            var kh = 4;
+            var delay = 300;
+
+            var fullSize = cell * 12;
+
+            var paper = Raphael(dom, fullSize, fullSize, 0, 0);
+
+            var attrAxis = {"stroke": colorBlue4, "stroke-width": 3, "arrow-end": "classic-wide-long", "stroke-linecap": "square"};
+            var attrLine = {"stroke": colorBlue4, "stroke-width": 2, "stroke-linecap": "square"};
+            var attrHit = {"stroke": colorOrange4, "stroke-width": 3, "stroke-linecap": "square"};
+            var attrInnerAxis = {"stroke": colorBlue1, "stroke-width": 1, "stroke-dasharray": "-", "stroke-linecap": "square"};
+            var attrVert = {"stroke": colorBlue4, "fill": colorBlue4};
+
+            this.createCanvas = function(figure, point) {
+                for (var i = 1; i < 12; i++){
+                    paper.path(format("M{0},{1}V{2}",
+                        i * cell,
+                        fullSize,
+                        cell / 2
+                    )).attr(attrInnerAxis);
+                    paper.path(format("M{0},{1}H{2}",
+                        0,
+                        fullSize - (cell * i),
+                        fullSize - cell / 2
+                    )).attr(attrInnerAxis);
+
+                }
+                paper.path(format("M0,{0}V0", fullSize)).attr(attrAxis);
+                paper.path(format("M0,{0}H{0}", fullSize)).attr(attrAxis);
+                for (i = 0; i < figure.length; i++) {
+                    var vert = figure[i];
+                    paper.circle(
+                        cell * vert[0],
+                        fullSize - (cell * vert[1]),
+                        cell / 5
+                    ).attr(attrVert);
+                }
+                paper.path(format("M{0},{1}L{2},{3}M{0},{3}L{2},{1}",
+                    point[0] * cell - cell / kh,
+                    fullSize - (point[1] * cell - cell / kh),
+                    point[0] * cell + cell / kh,
+                    fullSize - (point[1] * cell + cell / kh)
+
+                )).attr(attrHit);
+            };
+
+            this.animateCanvas = function(figure) {
+                var i = 1;
+                var l = figure.length;
+                function anim() {
+                    var vert;
+                    if (i === l) {
+                        vert = figure[0];
+                    }
+                    else if (i > l) {
+                        return false;
+                    }
+                    else {
+                        vert = figure[i];
+                    }
+                    var vert_prev = figure[i-1];
+                    i++;
+                    var p = paper.path(format("M{0},{1}L{0},{1}",
+                        vert_prev[0] * cell,
+                        fullSize - (vert_prev[1] * cell)
+                    )).attr(attrLine);
+                    p.animate({"path": format("M{0},{1}L{2},{3}",
+                        vert_prev[0] * cell,
+                        fullSize - (vert_prev[1] * cell),
+                        vert[0] * cell,
+                        fullSize - (vert[1] * cell)
+
+                    )}, delay, callback=anim);
+                }
+                anim();
+            }
+
+
+        }
         //Your Additional functions or objects inside scope
         //
         //
