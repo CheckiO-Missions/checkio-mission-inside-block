@@ -77,16 +77,16 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210'],
             }
             //Dont change the code before it
 
-            var canvas = new TargetHitCanvas($content.find(".explanation")[0]);
-            canvas.createCanvas(checkioInput[0], checkioInput[1]);
-            canvas.animateCanvas(checkioInput[0]);
+            var canvas = new TargetHitCanvas($content.find(".explanation")[0], checkioInput[0], checkioInput[1]);
+            canvas.createCanvas();
+            canvas.animateCanvas();
 
 
             this_e.setAnimationHeight($content.height() + 60);
 
         });
 
-        function TargetHitCanvas(dom)  {
+        function TargetHitCanvas(dom, figure, point)  {
             var format = Raphael.format;
 
             var colorOrange4 = "#F0801A";
@@ -106,11 +106,19 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210'],
 
             var colorWhite = "#FFFFFF";
 
-            var cell = 20;
-            var kh = 4;
+            var maxN = Math.max(point[0], point[1]);
+            for (var i = 0; i < figure.length; i++) {
+                maxN = Math.max(figure[i][0], figure[i][1], maxN);
+            }
+
+            console.log(maxN);
+
+
+            var cell = 300 / (maxN + 2);
+            var kh = 5;
             var delay = 300;
 
-            var fullSize = cell * 12;
+            var fullSize = cell * (maxN + 2);
 
             var paper = Raphael(dom, fullSize, fullSize, 0, 0);
 
@@ -120,8 +128,8 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210'],
             var attrInnerAxis = {"stroke": colorBlue1, "stroke-width": 1, "stroke-dasharray": "-", "stroke-linecap": "square"};
             var attrVert = {"stroke": colorBlue4, "fill": colorBlue4};
 
-            this.createCanvas = function(figure, point) {
-                for (var i = 1; i < 12; i++){
+            this.createCanvas = function() {
+                for (var i = 1; i < maxN + 2; i++){
                     paper.path(format("M{0},{1}V{2}",
                         i * cell,
                         fullSize,
@@ -145,15 +153,15 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210'],
                     ).attr(attrVert);
                 }
                 paper.path(format("M{0},{1}L{2},{3}M{0},{3}L{2},{1}",
-                    point[0] * cell - cell / kh,
-                    fullSize - (point[1] * cell - cell / kh),
-                    point[0] * cell + cell / kh,
-                    fullSize - (point[1] * cell + cell / kh)
+                    point[0] * cell - kh,
+                    fullSize - (point[1] * cell - kh),
+                    point[0] * cell + kh,
+                    fullSize - (point[1] * cell + kh)
 
                 )).attr(attrHit);
             };
 
-            this.animateCanvas = function(figure) {
+            this.animateCanvas = function() {
                 var i = 1;
                 var l = figure.length;
                 function anim() {
