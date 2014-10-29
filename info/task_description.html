@@ -1,44 +1,41 @@
 <p>
-    <i>( Describe task in general )</i>
+    We learned how to
+    <a href="http://www.checkio.org/mission/task/share/bullet-and-wall/03bef908ac114e1d85a1cdef7f97b266/">
+        target and shoot walls in a previous mission
+    </a>.
+    Now we must determine if a bullet will hit a specific shaped target.
+    The target is a polygon, which is represented as a list of vertex coordinates on a plane.
+    Vertices are connected sequentially with the last vertex in the list connecting to the first.
+    We have the coordinates of the point on the plane that the bullet struck.
+    If the bullet's point of impact lies on the edge of the polygon the hit is true.
+    For this mission, you need to determine whether the point of impact lies inside the target.
 </p>
+<img class="for_info_only" src="{{ MEDIA }}target-hit.png" width="600px"
+     alt="target-hit">
+<img class="for_editor_only" src="{{ MEDIA }}target-hit.png" width="380px"
+     alt="target-hit">
 
 <p>
-    Sum two passed ints
-</p>
+    <strong>Input:</strong> A list of lists for the vertices coordinates and impact point
+    coordinates. Coordinates are presented as a list of two integers. [[x1, y1], [x2,
+    y2], [x3, y3]], [xp, yp]]</p>
 
-<p style="text-align: center;">
-    <img class="for_info_only" title="example" src="{{MEDIA}}example.png" alt="example" width="392px"/>
-    <img class="for_editor_only" title="example" src="{{MEDIA}}example.png" alt="example" width="380px"/>
-</p>
-
-<p><i>( Explain input and output values )</i></p>
-<p>
-    <strong>Input: </strong> Two arguments. Both are int
-</p>
-
-<p>
-    <strong>Output: </strong> Int. 
-</p>
-
-
+<p><strong>Output:</strong>A boolean. True (hits the target) or False (misses the target.)</p>
 
 <div class="for_info_only">
-    <p><i>( Put some usage examples )</i></p>
-    <p>
-        <strong>Example:</strong>
-    </p>
-    <pre class="brush: python">
-checkio(3, 2) == 5
-checkio(5, 7) == 12
-    </pre>
+    <strong>Example:</strong>
+<pre class="brush:python">checkio([[[1,1],[1,3],[3,3],[3,1]], [2,2]]) == True
+checkio([[[1,1],[1,3],[3,3],[3,1]], [4,2]]) == False
+checkio([[[1,1],[4,1],[2,3]], [3,2]]) == True
+checkio([[[1,1],[4,1],[1,3]], [3,3]]) == False
+checkio([[[2,1],[4,1],[5,3],[3,4],[1,3]], [4,3]]) == True
+checkio([[[2,1],[4,1],[3,2],[3,4],[1,3]], [4,3]]) == False
+checkio([[[1,1],[3,2],[5,1],[4,3],[5,5],[3,4],[1,5],[2,3]], [3,3]]) == True
+checkio([[[1,1],[1,5],[5,5],[5,4],[2,4],[2,2],[5,2],[5,1]], [4,3]]) == False
+</pre>
 </div>
 
 <p class="for_info_only">
     <strong>How it is used: </strong>
-    <i>(Here you can explain how it can be used in development and what is usage of this.)</i>
-</p>
-
-<p>
-    <strong>Precondition:</strong>
-    <i>Constraints for Input</i>
+    Images recognizing.
 </p>
