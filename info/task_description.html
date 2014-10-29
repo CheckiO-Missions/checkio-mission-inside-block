@@ -1,41 +1,47 @@
-<p>
-    We learned how to
-    <a href="http://www.checkio.org/mission/task/share/bullet-and-wall/03bef908ac114e1d85a1cdef7f97b266/">
-        target and shoot walls in a previous mission
-    </a>.
-    Now we must determine if a bullet will hit a specific shaped target.
-    The target is a polygon, which is represented as a list of vertex coordinates on a plane.
-    Vertices are connected sequentially with the last vertex in the list connecting to the first.
-    We have the coordinates of the point on the plane that the bullet struck.
-    If the bullet's point of impact lies on the edge of the polygon the hit is true.
-    For this mission, you need to determine whether the point of impact lies inside the target.
+<p xmlns="http://www.w3.org/1999/html">
+    For city planing it's import to understand borders of various city structures.
+    Parks, lakes or living blocks can be represented as closed polygon.
+    And we can describe it with cartesian coordinates.
+    We need functionality to determine is a point (a building or a tree) lies inside the structure.
 </p>
-<img class="for_info_only" src="{{ MEDIA }}target-hit.png" width="600px"
-     alt="target-hit">
-<img class="for_editor_only" src="{{ MEDIA }}target-hit.png" width="380px"
-     alt="target-hit">
-
 <p>
-    <strong>Input:</strong> A list of lists for the vertices coordinates and impact point
-    coordinates. Coordinates are presented as a list of two integers. [[x1, y1], [x2,
-    y2], [x3, y3]], [xp, yp]]</p>
+    A city structure is a polygon, which is represented as a sequence of vertex coordinates on a
+    plane.
+    Vertices are connected sequentially with the last vertex in the list connecting to the first.
+    And we have coordinates of the point which we want to check.
+    If the point of impact lies on the edge of the polygon then it is inside.
+    For this mission, you need to determine whether the point lies inside the polygon.
+</p>
 
-<p><strong>Output:</strong>A boolean. True (hits the target) or False (misses the target.)</p>
+<p style="text-align: center">
+    <img src="{{ MEDIA }}example.svg">
+</p>
+<p>
+    For example, on the left image you see a polygon which is described by
+    ((2,1),(1,5),(5,7),(7,7),(7,2)) and the point at (2,7). The result is False.<br>
+    For the right image the point lies on the edge (it's counted as inside) so the result is True
+</p>
+<p>
+    <strong>Input:</strong> Two arguments. Polygon coordinates as a tuple of tuples with two integers each.
+    A checking point coordinates as a tuple of two integers.</p>
+
+<p><strong>Output:</strong> Whatever the point inside the polygon or not as a boolean.</p>
 
 <div class="for_info_only">
     <strong>Example:</strong>
-<pre class="brush:python">checkio([[[1,1],[1,3],[3,3],[3,1]], [2,2]]) == True
-checkio([[[1,1],[1,3],[3,3],[3,1]], [4,2]]) == False
-checkio([[[1,1],[4,1],[2,3]], [3,2]]) == True
-checkio([[[1,1],[4,1],[1,3]], [3,3]]) == False
-checkio([[[2,1],[4,1],[5,3],[3,4],[1,3]], [4,3]]) == True
-checkio([[[2,1],[4,1],[3,2],[3,4],[1,3]], [4,3]]) == False
-checkio([[[1,1],[3,2],[5,1],[4,3],[5,5],[3,4],[1,5],[2,3]], [3,3]]) == True
-checkio([[[1,1],[1,5],[5,5],[5,4],[2,4],[2,2],[5,2],[5,1]], [4,3]]) == False
-</pre>
+<textarea data-code="python">
+is_inside(((1,1),(1,3),(3,3),(3,1)), (2,2)) == True
+is_inside(((1,1),(1,3),(3,3),(3,1)), (4,2)) == False
+</textarea>
 </div>
 
 <p class="for_info_only">
     <strong>How it is used: </strong>
-    Images recognizing.
+    This concept is using for image recognizing. But as we said early it can be useful
+    for topographical software and city planning.
 </p>
+
+<p>
+    <strong>Precondition:</strong><br>
+
+    </p>
