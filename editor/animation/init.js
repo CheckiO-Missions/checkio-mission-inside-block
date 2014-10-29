@@ -40,10 +40,18 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210', 'snap.svg_030'],
             }
 
             //YOUR FUNCTION NAME
-            var fname = 'checkio';
+            var fname = 'is_inside';
 
-            var checkioInput = data.in;
-            var checkioInputStr = fname + '(' + JSON.stringify(checkioInput) + ')';
+            var checkioInput = data.in || [
+                [
+                    [1, 1],
+                    [1, 3],
+                    [3, 3],
+                    [3, 1]
+                ],
+                [2, 2],
+            ];
+            var checkioInputStr = fname + '(' + JSON.stringify(checkioInput).replace(/\[/g, "(").replace(/]/g, ")") + ')';
 
             var failError = function (dError) {
                 $content.find('.call').html(checkioInputStr);
@@ -68,6 +76,9 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210', 'snap.svg_030'],
 
             $content.find('.call').html(checkioInputStr);
             $content.find('.output').html('Working...');
+
+            var svg = new SVG($content.find(".explanation")[0]);
+            svg.draw(checkioInput[0], checkioInput[1]);
 
 
             if (data.ext) {
@@ -121,22 +132,62 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210', 'snap.svg_030'],
 //            });
 //        });
 
-        var colorOrange4 = "#F0801A";
-        var colorOrange3 = "#FA8F00";
-        var colorOrange2 = "#FAA600";
-        var colorOrange1 = "#FABA00";
+        function SVG(dom) {
+            var colorOrange4 = "#F0801A";
+            var colorOrange3 = "#FA8F00";
+            var colorOrange2 = "#FAA600";
+            var colorOrange1 = "#FABA00";
 
-        var colorBlue4 = "#294270";
-        var colorBlue3 = "#006CA9";
-        var colorBlue2 = "#65A1CF";
-        var colorBlue1 = "#8FC7ED";
+            var colorBlue4 = "#294270";
+            var colorBlue3 = "#006CA9";
+            var colorBlue2 = "#65A1CF";
+            var colorBlue1 = "#8FC7ED";
 
-        var colorGrey4 = "#737370";
-        var colorGrey3 = "#9D9E9E";
-        var colorGrey2 = "#C5C6C6";
-        var colorGrey1 = "#EBEDED";
+            var colorGrey4 = "#737370";
+            var colorGrey3 = "#9D9E9E";
+            var colorGrey2 = "#C5C6C6";
+            var colorGrey1 = "#EBEDED";
 
-        var colorWhite = "#FFFFFF";
+            var colorWhite = "#FFFFFF";
+
+            var pad = 10;
+
+            var paper;
+
+            var unit = 35;
+            var size = unit * 10 + 2 * pad;
+
+            var R = 10;
+
+            var aAxis = {"stroke": colorBlue4, "stroke-width": 2, "arrow-end": "classic"};
+            var aLine = {"stroke": colorBlue4, "stroke-width": 3};
+            var aVertex = {"stroke-width": 0, "fill": colorBlue4};
+            var aPoint = {"stroke": colorOrange4, "fill": colorOrange1, "stroke-width": 2};
+
+
+            this.draw = function(polygon, point) {
+                paper.path([["M", unit, size - unit], ["V", pad]]).attr(aAxis);
+                paper.path([["M", unit, size - unit], ["H", size - pad]]).attr(aAxis);
+
+                var polygonPath = [];
+                for (var i = 0; i <= polygon.length; i++) {
+                    var j = i % polygon.length;
+                    paper.circle(pad + polygon[j] * unit,
+                        size - pad - polygon[j] * unit, R).attr(aVertex);
+                    polygonPath.push([
+                        "L",
+                        pad + polygon[j] * unit,
+                        size - pad - polygon[j] * unit]
+                    );
+                }
+                polygonPath[0][0] = "M";
+                polygonPath.push(["Z"]);
+                paper.path(polygonPath).attr(aLine);
+                paper.circle(pad + point[0] * unit,
+                        size - pad - point[1] * unit, R).attr(aPoint);
+            }
+        }
+
         //Your Additional functions or objects inside scope
         //
         //
