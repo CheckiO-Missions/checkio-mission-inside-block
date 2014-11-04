@@ -51,7 +51,7 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210', 'snap.svg_030'],
                 ],
                 [2, 2],
             ];
-            var checkioInputStr = fname + '(' + JSON.stringify(checkioInput).replace(/\[/g, "(").replace(/]/g, ")") + ')';
+            var checkioInputStr = fname + '(' + JSON.stringify(checkioInput).replace(/\[/g, "(").replace(/]/g, ")").replace("(((", "((").replace(")))", "))") + ')';
 
             var failError = function (dError) {
                 $content.find('.call').html(checkioInputStr);
@@ -152,37 +152,40 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210', 'snap.svg_030'],
 
             var pad = 10;
 
-            var paper;
+
 
             var unit = 35;
             var size = unit * 10 + 2 * pad;
 
-            var R = 10;
+            var R = unit / 6;
+
+            var paper = Raphael(dom, size, size);
 
             var aAxis = {"stroke": colorBlue4, "stroke-width": 2, "arrow-end": "classic"};
-            var aLine = {"stroke": colorBlue4, "stroke-width": 3};
+            var aLine = {"stroke": colorBlue4, "stroke-width": 3, "fill": colorBlue1};
             var aVertex = {"stroke-width": 0, "fill": colorBlue4};
             var aPoint = {"stroke": colorOrange4, "fill": colorOrange1, "stroke-width": 2};
 
 
             this.draw = function(polygon, point) {
-                paper.path([["M", unit, size - unit], ["V", pad]]).attr(aAxis);
-                paper.path([["M", unit, size - unit], ["H", size - pad]]).attr(aAxis);
+                paper.path([["M", pad, size - pad], ["V", pad]]).attr(aAxis);
+                paper.path([["M", pad, size - pad], ["H", size - pad]]).attr(aAxis);
 
                 var polygonPath = [];
                 for (var i = 0; i <= polygon.length; i++) {
                     var j = i % polygon.length;
-                    paper.circle(pad + polygon[j] * unit,
-                        size - pad - polygon[j] * unit, R).attr(aVertex);
+                    paper.circle(pad + polygon[j][0] * unit,
+                        size - pad - polygon[j][1] * unit, R).attr(aVertex);
                     polygonPath.push([
                         "L",
-                        pad + polygon[j] * unit,
-                        size - pad - polygon[j] * unit]
+                        pad + polygon[j][0] * unit,
+                        size - pad - polygon[j][1] * unit]
                     );
                 }
                 polygonPath[0][0] = "M";
                 polygonPath.push(["Z"]);
-                paper.path(polygonPath).attr(aLine);
+                console.log(polygonPath);
+                paper.path(polygonPath).attr(aLine).toBack();
                 paper.circle(pad + point[0] * unit,
                         size - pad - point[1] * unit, R).attr(aPoint);
             }

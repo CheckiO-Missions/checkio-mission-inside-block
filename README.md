@@ -1,4 +1,4 @@
-checkio-task-target-hit
+checkio-mission-inside-block
 =======================
 
-[Checkio Task "Target hit"](http://www.checkio.org/mission/task/info/target-hit)
+Checkio Mission "Inside Block"
