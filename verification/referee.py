@@ -12,8 +12,10 @@ api.add_listener(
     ON_CONNECT,
     CheckiOReferee(
         tests=TESTS,
-        cover_code={
-            'python-27': cover,  # or None
-            'python-3': cover
+        function_name={
+            "python": "is_inside",
+            "js": "isInside"
         },
-        function_name="is_inside").on_ready)
+        cover_code={
+            'python-3': cover
+        }).on_ready)
