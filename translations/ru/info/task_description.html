@@ -34,9 +34,26 @@
 <div class="for_info_only">
     <strong>Примеры:</strong>
 </div>
-<textarea data-code="python">
-is_inside(((1,1),(1,3),(3,3),(3,1)), (2,2)) == True
-is_inside(((1,1),(1,3),(3,3),(3,1)), (4,2)) == False</textarea>
+
+{% if interpreter.slug == "js-node" %}
+<pre class="brush: javascript">isInside([[1, 1], [1, 3], [3, 3], [3, 1]],
+ [2, 2]) == true
+isInside([[1, 1], [1, 3], [3, 3], [3, 1]],
+ [4, 2]) == false
+isInside([[1, 1], [4, 1], [2, 3]], [3, 2]) == true
+isInside([[1, 1], [4, 1], [1, 3]], [3, 3]) == false
+isInside([[2, 1],
+  [4, 1],
+  [5, 3],
+  [3, 4],
+  [1, 3]],
+ [4, 3]) == true
+</pre>
+{% else %}
+<pre class="brush: python">is_inside(((1,1),(1,3),(3,3),(3,1)), (2,2)) == True
+is_inside(((1,1),(1,3),(3,3),(3,1)), (4,2)) == False
+</pre>
+{% endif %}
 <br>
 
 
