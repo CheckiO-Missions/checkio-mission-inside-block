@@ -1,8 +1,8 @@
 import assert from "assert";
 
-function isInside(a, b) {
+function isInside(polygon:[number, number][], b: [number, number]): boolean {
     // your code here
-    return undefined;
+    return false;
 }
 
 console.log('Example:');
