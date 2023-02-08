@@ -20,14 +20,14 @@
 </p>
 <p>
     For example, on the left image you see a polygon which is described by
-    ((2,1),(1,5),(5,7),(7,7),(7,2)) and the point at (2,7). The result is False.<br>
+    [[2, 1], [1, 5],[5, 7], [7, 7], [7, 2]] and the point at [2, 7]. The result is False.<br>
     For the right image the point lies on the edge and gets counted as inside the polygon,
     making the result True.
 </p>
 <p>
-    <strong>Input:</strong> Two arguments. Polygon coordinates as a tuple of tuples with two
+    <strong>Input:</strong> Two arguments. Polygon coordinates as a list of lists with two
     integers each.
-    A checking point coordinates as a tuple of two integers.</p>
+    A checking point coordinates as a list of two integers.</p>
 
 <p><strong>Output:</strong> Whatever the point inside the polygon or not as a boolean.</p>
 
@@ -49,8 +49,8 @@ isInside([[2, 1],
  [4, 3]) == true
 </pre>
 {% else %}
-<pre class="brush: python">is_inside(((1,1),(1,3),(3,3),(3,1)), (2,2)) == True
-is_inside(((1,1),(1,3),(3,3),(3,1)), (4,2)) == False
+<pre class="brush: python">is_inside([[1, 1], [1, 3], [3, 3], [3, 1]), [2, 2]) == True
+is_inside([[1,1], [1, 3], [3, 3], [3, 1]), [4, 2]) == False
 </pre>
 {% endif %}
     <br>
