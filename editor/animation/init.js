@@ -1,6 +1,6 @@
 //Dont change it
 
-requirejs(['ext_editor_io', 'jquery_190', 'raphael_210', 'snap.svg_030'],
+requirejs(['ext_editor_io2', 'jquery_190', 'raphael_210', 'snap.svg_030'],
     function (extIO, $, Raphael, Snap) {
         function SVG(dom) {
             var colorOrange4 = "#F0801A";
@@ -44,30 +44,25 @@ requirejs(['ext_editor_io', 'jquery_190', 'raphael_210', 'snap.svg_030'],
                 var polygonPath = [];
                 for (var i = 0; i <= polygon.length; i++) {
                     var j = i % polygon.length;
-                    paper.circle(pad + polygon[j][0] * unit,
-                        size - pad - polygon[j][1] * unit, R).attr(aVertex);
+                    var circleX = pad + polygon[j].values[0] * unit;
+                    var circleY = size - pad - polygon[j].values[1] * unit;
+                    paper.circle(circleX, circleY, R).attr(aVertex);
                     polygonPath.push([
                         "L",
-                        pad + polygon[j][0] * unit,
-                        size - pad - polygon[j][1] * unit]
+                        pad + polygon[j].values[0] * unit,
+                        size - pad - polygon[j].values[1] * unit]
                     );
                 }
                 polygonPath[0][0] = "M";
                 polygonPath.push(["Z"]);
-                console.log(polygonPath);
                 paper.path(polygonPath).attr(aLine).toBack();
-                paper.circle(pad + point[0] * unit,
-                        size - pad - point[1] * unit, R).attr(aPoint);
+                paper.circle(pad + point.values[0] * unit,
+                        size - pad - point.values[1] * unit, R).attr(aPoint);
             }
         }
         var io = new extIO({
-            functions: {
-                js: 'isInside',
-                python: 'is_inside'
-            },
-            animationTemplateName: 'animation',
             animation: function($expl, data){
-                var checkioInput = data.in;
+                var checkioInput = data.in;
                 if (!checkioInput){
                     return;
                 }
