@@ -1,0 +1,50 @@
+ <p>
+    Bei der Stadtplanung ist es wichtig, die Grenzen der verschiedenen Stadtstrukturen zu verstehen.
+    Parks, Seen oder Wohnblöcke lassen sich als geschlossene Polygone darstellen und können mit
+    kartesischen Koordinaten auf einer Karte beschrieben werden. Wir brauchen eine Funktion, mit der wir feststellen können, ob ein Punkt (ein Gebäude oder ein
+    baum) innerhalb der Struktur liegt.
+
+</p>
+<p>
+    Für die Zwecke dieser Mission kann eine Stadtstruktur als ein Polygon betrachtet werden, das als eine
+    abfolge von Eckpunktkoordinaten auf einer Ebene oder Karte. Die Eckpunkte werden der Reihe nach verbunden, wobei
+    der letzte Eckpunkt in der Liste mit dem ersten verbunden ist. Wir erhalten die Koordinaten des Punktes
+    den wir überprüfen müssen. Wenn der Auftreffpunkt auf dem Rand des Polygons liegt, sollte er als
+    als innerhalb des Polygons betrachtet werden. Für diese Aufgabe müssen Sie feststellen, ob der angegebene Punkt
+    innerhalb des Polygons liegt.
+</p>
+
+<p style="text-align: center">
+    <img class="for_info_only" src="{{ MEDIA }}example.svg">
+    <img class="for_editor_only" src="{{ MEDIA }}example.svg" width="380px">
+</p>
+<p>
+    Auf dem linken Bild sehen Sie zum Beispiel ein Polygon, das beschrieben wird durch <b>{% if is_js %}[[2, 1], [1, 5],[5, 7], [7, 7], [7, 2]]{% else %}[(2, 1), (1, 5), (5, 7), (7, 7), (7, 2)]{% endif %}</b> und der Punkt bei <b>{% if is_js %}[2, 7]{% else %}(2, 7){% endif %}</b>. Das Ergebnis ist <b><span>{% if is_js %}f{% else %}F{% endif %}alse</span></b>.<br>
+    Auf dem rechten Bild liegt der Punkt auf der Kante und wird als innerhalb des Polygons gezählt,
+    wodurch das Ergebnis <b><span>{% if is_js %}t{% else %}T{% endif %}rue</span></b>.
+</p>
+<p>
+   <strong>Eingabe:</strong> Zwei Argumente. Polygonkoordinaten als {% if is_js %}Array <span>(array)</span> von Arrays{% else %}Liste <span>(list)</span> von Tupel <span>(tuple)</span>{% endif %} mit zwei
+    ganzen Zahlen <span>({% if is_js %}number{% else %}int{% endif %})</span> jeweils.
+    Die Koordinaten eines Kontrollpunktes als {% if is_js %}Array{% else %}Tupel{% endif %} mit zwei ganzen Zahlen.</p>
+
+<p><strong>Ausgabe:</strong> Ob der Punkt innerhalb des Polygons liegt oder nicht, als logischer Wert <span>(bool{% if is_js %}ean{% endif %})</span>.</p>
+
+<div class="for_info_only">
+    <strong>Beispiele:</strong>
+    <pre class="brush: {% if is_js %}javascript{% else %}python{% endif %}">{{init_code_tmpl}}</pre>
+</div>
+
+<p class="for_info_only">
+   <strong>Wie es verwendet wird:</strong>
+    Dieses Konzept wird für die Bilderkennung verwendet. Aber wie wir bereits gesagt haben, kann es auch nützlich sein
+    für topographische Software und Stadtplanung.
+</p>
+
+<p>
+    <strong>Vorbedingungen:</strong>
+    <ul>
+        <li>all(x &ge; 0 und y &ge; 0 für x, y in Polygon);</li>
+        <li>punkt[0] &ge; 0 und Punkt[1] &ge; 0.</li>
+    </ul>
+</p>
